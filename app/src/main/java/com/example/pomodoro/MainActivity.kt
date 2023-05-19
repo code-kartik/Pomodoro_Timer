@@ -18,8 +18,10 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.hide()
 
+
         binding.timerTextView.setOnLongClickListener {
             if(isTimerRunning == true){
+                countDownTimer.cancel()
                 isTimerRunning = false
             }
             true
