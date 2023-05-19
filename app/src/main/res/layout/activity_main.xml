@@ -8,7 +8,8 @@
     android:id="@+id/constLayout"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="@color/GrayBlack">
+    android:background="@color/GrayBlack"
+    android:keepScreenOn="true">
 
     <TextView
         android:id="@+id/timerTextView"
@@ -16,7 +17,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/inconsolata"
         android:padding="16dp"
-        android:text="25:00"
+        android:text="00:00"
         android:textColor="#FFFFFF"
         android:textSize="96sp"
         android:textStyle="bold"
@@ -25,7 +26,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.389" />
+        app:layout_constraintVertical_bias="0.5" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="90dp"
@@ -37,13 +38,14 @@
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timerTextView"
-        app:layout_constraintVertical_bias="0.2">
+        app:layout_constraintVertical_bias="0.6">
 
         <Button
             android:id="@+id/startButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="#555555"
+            android:outlineSpotShadowColor="#555555"
             android:text="Start"
             android:fontFamily="@font/roboto_mono_medium"/>
 
@@ -59,13 +61,14 @@
         app:layout_constraintHorizontal_bias="0.8"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/timerTextView"
-        app:layout_constraintVertical_bias="0.2">
+        app:layout_constraintVertical_bias="0.6">
 
         <Button
             android:id="@+id/resetButton"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:backgroundTint="#555555"
+            android:outlineSpotShadowColor="#555555"
             android:text="Reset"
             android:fontFamily="@font/roboto_mono_medium"/>
 
