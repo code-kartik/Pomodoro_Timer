@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun startWorkTimer() {
         val notifyText:String = "You did good work. Take some break☺"
-        val pomodoroTimeInMillis = 1 * 60 * 1000 // 25 minutes
+        val pomodoroTimeInMillis = 25 * 60 * 1000 // 25 minutes
 
         countDownTimer = object : CountDownTimer(pomodoroTimeInMillis.toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
