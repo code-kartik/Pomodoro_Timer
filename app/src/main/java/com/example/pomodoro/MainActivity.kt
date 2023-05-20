@@ -1,13 +1,10 @@
 package com.example.pomodoro
-import android.Manifest
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.example.pomodoro.databinding.ActivityMainBinding
@@ -47,8 +44,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startWorkTimer() {
-        val notifText:String = "You did good work. Take some break☺"
-        val pomodoroTimeInMillis = 25 * 60 * 1000 // 25 minutes
+        val notifyText:String = "You did good work. Take some break☺"
+        val pomodoroTimeInMillis = 1 * 60 * 1000 // 25 minutes
 
         countDownTimer = object : CountDownTimer(pomodoroTimeInMillis.toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -61,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                 binding.timerTextView.text = "00:00"
                 isWorkTime = false
                 startBreakTimer()
-                showNotification(notifText)
+                showNotification(notifyText)
             }
         }
 
@@ -70,7 +67,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startBreakTimer() {
-        val notifText:String = "Break's Over. Time to get back to work."
+        val notifyText:String = "Break's Over. Time to get back to work."
         val breakTimeInMillis = 5 * 60 * 1000
 
         countDownTimer = object : CountDownTimer(breakTimeInMillis.toLong(), 1000) {
@@ -85,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                 binding.timerTextView.text = "00:00"
                 isWorkTime = true
                 startWorkTimer()
-                showNotification(notifText)
+                showNotification(notifyText)
             }
         }
         countDownTimer.start()
@@ -98,13 +95,13 @@ class MainActivity : AppCompatActivity() {
             countDownTimer.cancel()
             isWorkTime = false
         }
-        binding.timerTextView.text = "02:00"
+        binding.timerTextView.text = "25:00"
     }
 
     private fun showNotification(context:String) {
         val builder = NotificationCompat.Builder(this@MainActivity, "pomodoro_channel")
             .setSmallIcon(R.drawable.baseline_timer_24)
-            .setContentTitle("Pomodoro Timer")
+            .setContentTitle("Pomodoro")
             .setContentText(context)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setAutoCancel(true)
