@@ -1,4 +1,5 @@
 package com.example.pomodoro
+import android.graphics.Color
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.WindowManager
@@ -8,9 +9,9 @@ import com.example.pomodoro.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var isTimerRunning = false
+    private var isWorkTime = false
     private lateinit var countDownTimer: CountDownTimer
-    val time = 0.500
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,9 +21,10 @@ class MainActivity : AppCompatActivity() {
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
         supportActionBar?.hide()
+        binding.timerTextView.text = "02:00"
 
         binding.startButton.setOnClickListener {
-            startTimer(time)
+            startTimer()
         }
 
         binding.resetButton.setOnClickListener {
@@ -30,10 +32,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun startTimer(time: Double) {
-        if (isTimerRunning) return
+    private fun startTimer() {
+        if (!isWorkTime) {
+            startWorkTimer()
+        } else {
+            startBreakTimer()
+        }
+    }
 
-        val pomodoroTimeInMillis = time * 60 * 1000 // 25 minutes
+    private fun startWorkTimer() {
+        val pomodoroTimeInMillis = 2 * 60 * 1000 // 25 minutes
 
         countDownTimer = object : CountDownTimer(pomodoroTimeInMillis.toLong(), 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -43,22 +51,43 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
-                val breakTimer = 0.250
-                binding.timerTextView.setTextColor(777777)
-                isTimerRunning = true
-                startTimer(breakTimer)
+                binding.timerTextView.text = "00:00"
+                isWorkTime = false
+                startBreakTimer()
             }
         }
 
         countDownTimer.start()
-        isTimerRunning = true
+        isWorkTime = true
     }
 
-    private fun resetTimer() {
-        if (isTimerRunning) {
-            countDownTimer.cancel()
-            isTimerRunning = false
+    private fun startBreakTimer() {
+        val breakTimeInMillis = 1 * 60 * 1000
+
+        countDownTimer = object : CountDownTimer(breakTimeInMillis.toLong(), 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                val minutes = millisUntilFinished / 1000 / 60
+                val seconds = millisUntilFinished / 1000 % 60
+                binding.timerTextView.text = String.format("%02d:%02d", minutes, seconds)
+                binding.timerTextView.setTextColor(Color.parseColor("#777777")) // Set the text color
+            }
+
+            override fun onFinish() {
+                binding.timerTextView.text = "00:00"
+                isWorkTime = true
+                startWorkTimer()
+            }
         }
-        binding.timerTextView.text = "00:30"
+        countDownTimer.start()
+        isWorkTime = false
+    }
+
+
+    private fun resetTimer() {
+        if (isWorkTime) {
+            countDownTimer.cancel()
+            isWorkTime = false
+        }
+        binding.timerTextView.text = "02:00"
     }
 }
